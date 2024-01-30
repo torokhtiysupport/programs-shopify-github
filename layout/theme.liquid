@@ -1,0 +1,448 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head> 
+  <meta name="facebook-domain-verification" content="sdnnelum7l0benidcrqn09k6pdvguz" />
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KQ8BWGV');</script>
+<!-- End Google Tag Manager -->
+      <meta name="robots" content="noindex, nofollow">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+
+    <!-- Intelligems A/B -->
+  <script src="https://cdn.intelligems.io/5803b77e2c04.js"></script>
+    <!-- End Intelligems A/B -->
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% render 'meta-tags' %}
+
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    {{ content_for_header }}
+
+    {%- liquid
+      assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
+      assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
+      assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+    %}
+
+    {% style %}
+      {{ settings.type_body_font | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+      {{ body_font_italic | font_face: font_display: 'swap' }}
+      {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+      {{ settings.type_header_font | font_face: font_display: 'swap' }}
+
+      :root {
+        --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+        --font-body-style: {{ settings.type_body_font.style }};
+        --font-body-weight: {{ settings.type_body_font.weight }};
+        --font-body-weight-bold: {{ settings.type_body_font.weight | plus: 300 | at_most: 1000 }};
+
+        --font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+        --font-heading-style: {{ settings.type_header_font.style }};
+        --font-heading-weight: {{ settings.type_header_font.weight }};
+
+        --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+        --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
+
+        --color-base-text: {{ settings.colors_text.red }}, {{ settings.colors_text.green }}, {{ settings.colors_text.blue }};
+        --color-shadow: {{ settings.colors_text.red }}, {{ settings.colors_text.green }}, {{ settings.colors_text.blue }};
+        --color-base-background-1: {{ settings.colors_background_1.red }}, {{ settings.colors_background_1.green }}, {{ settings.colors_background_1.blue }};
+        --color-base-background-2: {{ settings.colors_background_2.red }}, {{ settings.colors_background_2.green }}, {{ settings.colors_background_2.blue }};
+        --color-base-solid-button-labels: {{ settings.colors_solid_button_labels.red }}, {{ settings.colors_solid_button_labels.green }}, {{ settings.colors_solid_button_labels.blue }};
+        --color-base-outline-button-labels: {{ settings.colors_outline_button_labels.red }}, {{ settings.colors_outline_button_labels.green }}, {{ settings.colors_outline_button_labels.blue }};
+        --color-base-accent-1: {{ settings.colors_accent_1.red }}, {{ settings.colors_accent_1.green }}, {{ settings.colors_accent_1.blue }};
+        --color-base-accent-2: {{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }};
+        --payment-terms-background-color: {{ settings.colors_background_1 }};
+
+        --gradient-base-background-1: {% if settings.gradient_background_1 != blank %}{{ settings.gradient_background_1 }}{% else %}{{ settings.colors_background_1 }}{% endif %};
+        --gradient-base-background-2: {% if settings.gradient_background_2 != blank %}{{ settings.gradient_background_2 }}{% else %}{{ settings.colors_background_2 }}{% endif %};
+        --gradient-base-accent-1: {% if settings.gradient_accent_1 != blank %}{{ settings.gradient_accent_1 }}{% else %}{{ settings.colors_accent_1 }}{% endif %};
+        --gradient-base-accent-2: {% if settings.gradient_accent_2 != blank %}{{ settings.gradient_accent_2 }}{% else %}{{ settings.colors_accent_2 }}{% endif %};
+
+        --media-padding: {{ settings.media_padding }}px;
+        --media-border-opacity: {{ settings.media_border_opacity | divided_by: 100.0 }};
+        --media-border-width: {{ settings.media_border_thickness }}px;
+        --media-radius: {{ settings.media_radius }}px;
+        --media-shadow-opacity: {{ settings.media_shadow_opacity | divided_by: 100.0 }};
+        --media-shadow-horizontal-offset: {{ settings.media_shadow_horizontal_offset }}px;
+        --media-shadow-vertical-offset: {{ settings.media_shadow_vertical_offset }}px;
+        --media-shadow-blur-radius: {{ settings.media_shadow_blur }}px;
+        --media-shadow-visible: {% if settings.media_shadow_opacity > 0 %}1{% else %}0{% endif %};
+
+        --page-width: {{ settings.page_width | divided_by: 10 }}rem;
+        --page-width-margin: {% if settings.page_width == '1600' %}2{% else %}0{% endif %}rem;
+
+        --card-image-padding: {{ settings.card_image_padding | divided_by: 10.0 }}rem;
+        --card-corner-radius: {{ settings.card_corner_radius | divided_by: 10.0 }}rem;
+        --card-text-alignment: {{ settings.card_text_alignment }};
+        --card-border-width: {{ settings.card_border_thickness | divided_by: 10.0 }}rem;
+        --card-border-opacity: {{ settings.card_border_opacity | divided_by: 100.0 }};
+        --card-shadow-opacity: {{ settings.card_shadow_opacity | divided_by: 100.0 }};
+        --card-shadow-visible: {% if settings.card_shadow_opacity > 0 %}1{% else %}0{% endif %};
+        --card-shadow-horizontal-offset: {{ settings.card_shadow_horizontal_offset | divided_by: 10.0 }}rem;
+        --card-shadow-vertical-offset: {{ settings.card_shadow_vertical_offset | divided_by: 10.0 }}rem;
+        --card-shadow-blur-radius: {{ settings.card_shadow_blur | divided_by: 10.0 }}rem;
+
+        --badge-corner-radius: {{ settings.badge_corner_radius | divided_by: 10.0 }}rem;
+
+        --popup-border-width: {{ settings.popup_border_thickness }}px;
+        --popup-border-opacity: {{ settings.popup_border_opacity | divided_by: 100.0 }};
+        --popup-corner-radius: {{ settings.popup_corner_radius }}px;
+        --popup-shadow-opacity: {{ settings.popup_shadow_opacity | divided_by: 100.0 }};
+        --popup-shadow-horizontal-offset: {{ settings.popup_shadow_horizontal_offset }}px;
+        --popup-shadow-vertical-offset: {{ settings.popup_shadow_vertical_offset }}px;
+        --popup-shadow-blur-radius: {{ settings.popup_shadow_blur }}px;
+
+        --drawer-border-width: {{ settings.drawer_border_thickness }}px;
+        --drawer-border-opacity: {{ settings.drawer_border_opacity | divided_by: 100.0 }};
+        --drawer-shadow-opacity: {{ settings.drawer_shadow_opacity | divided_by: 100.0 }};
+        --drawer-shadow-horizontal-offset: {{ settings.drawer_shadow_horizontal_offset }}px;
+        --drawer-shadow-vertical-offset: {{ settings.drawer_shadow_vertical_offset }}px;
+        --drawer-shadow-blur-radius: {{ settings.drawer_shadow_blur }}px;
+
+        --spacing-sections-desktop: {{ settings.spacing_sections }}px;
+        --spacing-sections-mobile: {% if settings.spacing_sections < 24 %}{{ settings.spacing_sections }}{% else %}{{ settings.spacing_sections | times: 0.7 | round | at_least: 20 }}{% endif %}px;
+
+        --grid-desktop-vertical-spacing: {{ settings.spacing_grid_vertical }}px;
+        --grid-desktop-horizontal-spacing: {{ settings.spacing_grid_horizontal }}px;
+        --grid-mobile-vertical-spacing: {{ settings.spacing_grid_vertical | divided_by: 2 }}px;
+        --grid-mobile-horizontal-spacing: {{ settings.spacing_grid_horizontal | divided_by: 2 }}px;
+
+        --text-boxes-border-opacity: {{ settings.text_boxes_border_opacity | divided_by: 100.0 }};
+        --text-boxes-border-width: {{ settings.text_boxes_border_thickness }}px;
+        --text-boxes-radius: {{ settings.text_boxes_radius }}px;
+        --text-boxes-shadow-opacity: {{ settings.text_boxes_shadow_opacity | divided_by: 100.0 }};
+        --text-boxes-shadow-visible: {% if settings.text_boxes_shadow_opacity > 0 %}1{% else %}0{% endif %};
+        --text-boxes-shadow-horizontal-offset: {{ settings.text_boxes_shadow_horizontal_offset }}px;
+        --text-boxes-shadow-vertical-offset: {{ settings.text_boxes_shadow_vertical_offset }}px;
+        --text-boxes-shadow-blur-radius: {{ settings.text_boxes_shadow_blur }}px;
+
+        --buttons-radius: {{ settings.buttons_radius }}px;
+        --buttons-radius-outset: {% if settings.buttons_radius > 0 %}{{ settings.buttons_radius | plus: settings.buttons_border_thickness }}{% else %}0{% endif %}px;
+        --buttons-border-width: {% if settings.buttons_border_opacity > 0 %}{{ settings.buttons_border_thickness }}{% else %}0{% endif %}px;
+        --buttons-border-opacity: {{ settings.buttons_border_opacity | divided_by: 100.0 }};
+        --buttons-shadow-opacity: {{ settings.buttons_shadow_opacity | divided_by: 100.0 }};
+        --buttons-shadow-visible: {% if settings.buttons_shadow_opacity > 0 %}1{% else %}0{% endif %};
+        --buttons-shadow-horizontal-offset: {{ settings.buttons_shadow_horizontal_offset }}px;
+        --buttons-shadow-vertical-offset: {{ settings.buttons_shadow_vertical_offset }}px;
+        --buttons-shadow-blur-radius: {{ settings.buttons_shadow_blur }}px;
+        --buttons-border-offset: {% if settings.buttons_radius > 0 or settings.buttons_shadow_opacity > 0 %}0.3{% else %}0{% endif %}px;
+
+        --inputs-radius: {{ settings.inputs_radius }}px;
+        --inputs-border-width: {{ settings.inputs_border_thickness }}px;
+        --inputs-border-opacity: {{ settings.inputs_border_opacity | divided_by: 100.0 }};
+        --inputs-shadow-opacity: {{ settings.inputs_shadow_opacity | divided_by: 100.0 }};
+        --inputs-shadow-horizontal-offset: {{ settings.inputs_shadow_horizontal_offset }}px;
+        --inputs-margin-offset: {% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_opacity > 0 %}{{ settings.inputs_shadow_vertical_offset | abs }}{% else %}0{% endif %}px;
+        --inputs-shadow-vertical-offset: {{ settings.inputs_shadow_vertical_offset }}px;
+        --inputs-shadow-blur-radius: {{ settings.inputs_shadow_blur }}px;
+        --inputs-radius-outset: {% if settings.inputs_radius > 0 %}{{ settings.inputs_radius | plus: settings.inputs_border_thickness }}{% else %}0{% endif %}px;
+
+        --variant-pills-radius: {{ settings.variant_pills_radius }}px;
+        --variant-pills-border-width: {{ settings.variant_pills_border_thickness }}px;
+        --variant-pills-border-opacity: {{ settings.variant_pills_border_opacity | divided_by: 100.0 }};
+        --variant-pills-shadow-opacity: {{ settings.variant_pills_shadow_opacity | divided_by: 100.0 }};
+        --variant-pills-shadow-horizontal-offset: {{ settings.variant_pills_shadow_horizontal_offset }}px;
+        --variant-pills-shadow-vertical-offset: {{ settings.variant_pills_shadow_vertical_offset }}px;
+        --variant-pills-shadow-blur-radius: {{ settings.variant_pills_shadow_blur }}px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: inherit;
+      }
+
+      html {
+        box-sizing: border-box;
+        font-size: calc(var(--font-body-scale) * 62.5%);
+        height: 100%;
+      }
+
+      body {
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-columns: 100%;
+        min-height: 100%;
+        margin: 0;
+        font-size: 1.5rem;
+        letter-spacing: 0.06rem;
+        line-height: calc(1 + 0.8 / var(--font-body-scale));
+        font-family: var(--font-body-family);
+        font-style: var(--font-body-style);
+        font-weight: var(--font-body-weight);
+      }
+
+      @media screen and (min-width: 750px) {
+        body {
+          font-size: 1.6rem;
+        }
+      }
+    {% endstyle %}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    {%- unless settings.type_body_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+    {%- unless settings.type_header_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+
+    {%- if settings.predictive_search_enabled -%}
+      <link rel="stylesheet" href="{{ 'component-predictive-search.css' | asset_url }}" media="print" onload="this.media='all'">
+    {%- endif -%}
+
+    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    if (Shopify.designMode) {
+      document.documentElement.classList.add('shopify-design-mode');
+    }
+    </script>
+  <!--Gem_Page_Header_Script-->
+{% render 'gem-app-header-scripts' %}
+<!--End_Gem_Page_Header_Script-->
+  <!-- Lucky Orange Script -->
+  <script async defer src="https://tools.luckyorange.com/core/lo.js?site-id=94c81309"></script>
+  <!-- Lucky Orange Script -->
+</head>
+
+  <body class="gradient">
+    <a class="skip-to-content-link button visually-hidden" href="#MainContent">
+      {{ "accessibility.skip_to_text" | t }}
+    </a>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQ8BWGV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    {%- if settings.cart_type == 'drawer' -%}
+      {%- render 'cart-drawer' -%}
+    {%- endif -%}
+
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      {% capture ICART_FULL_PAGE_LAYOUT %}{{ content_for_layout }}{% endcapture %}{% include 'icart-variables', ICART_FULL_PAGE_LAYOUT: ICART_FULL_PAGE_LAYOUT %}
+    </main>
+
+    
+    <!---------- ---------------------- Footer ------------------------------------------------- -->
+    <div id="shopify-section-footer" class="shopify-section"><footer class="site-footer" role="contentinfo">
+  <div class="page-width">
+    <div class="flex-footer">
+      
+      
+        <div class="flex__item">
+          
+              
+                <div class="site-footer__section">
+                  <p class="h1 site-footer__section-title">Information</p>
+                  <ul class="site-footer__list">
+   
+                    <li class="site-footer__list-item"><a href="/pages/contact-us">Contact us</a></li>
+                    <li class="site-footer__list-item"><a href="https://torokhtiy.com/pages/careers">Careers</a></li>
+   <li class="site-footer__list-item"><a href="https://blog.torokhtiy.com/">Blog</a></li>
+                    <li class="site-footer__list-item"><a href="/pages/sitemap">Sitemap</a></li>
+                    <!--<li class="site-footer__list-item"><a href="/pages/terms-and-conditions">Terms and conditions</a></li>
+                    <li class="site-footer__list-item"><a href="/pages/privacy-policy-1">Privacy policy</a></li>
+                    <li class="site-footer__list-item"><a href="https://torokhtiy.com/policies/refund-policy">Refund policy</a></li>
+                    <li class="site-footer__list-item"><a href="https://torokhtiy.com/pages/agreement-and-release-of-liability">Agreement and release of liability</a></li>-->
+                    <li class="site-footer__list-item"><a href="https://torokhtiy.com/pages/torokhtiy-policies-and-guidelines">Torokhtiy Policies and Guidelines</a></li>
+                    <li class="site-footer__list-item"><a href="https://torokhtiy.com/pages/about-us">Our Team</a></li>
+                    <li class="site-footer__list-item"><a href="https://torokhtiy.com/pages/our-story">Our Story</a></li>
+                    <li class="site-footer__list-item"><a href="https://torokhtiy.com/pages/register-affiliate-account">Join our affiliate program</a></li>
+                    <li class="site-footer__list-item"><a href="https://torokhtiy.com/pages/medical-disclaimer">Medical Disclaimer</a></li>
+                    <li class="site-footer__list-item"><a href="https://torokhtiy.com/pages/editorial-policy-and-standards">Editorial Policy & Standards</a></li>
+                    	
+                  </ul>
+
+
+                </div>
+  
+        </div>
+      
+       <div class="flex__item">
+
+                <div class="site-footer__section">
+                  <p class="h1 site-footer__section-title">Best-selling Programs<p>
+                  <ul class="site-footer__list">
+                      <li class="site-footer__list-item"><a href="https://torokhtiy.com/products/male-weightlifting-2-0">Olympic Weightlifting Program</a></li>
+                      <li class="site-footer__list-item"><a href="https://torokhtiy.com/products/weight-lifting-program-for-women">Weight Lifting Program for Women</a></li>
+                                        	
+                    	<li class="site-footer__list-item"><a href="https://torokhtiy.com/products/free-weightlifting-intro-program">Free Weightlifting Program</a></li>
+   <li class="site-footer__list-item"><a href="https://torokhtiy.com/products/squat-program">12 Week Squat Program For Strength & Mass</a></li>
+                    <li class="site-footer__list-item"><a href="https://torokhtiy.com/products/olympic-weightlifting-program-for-beginners">Olympic Weightlifting Program for Beginners</a></li>
+                  </ul>
+                </div>
+            
+        </div>
+  <!-- <div class="flex__item">
+          
+              
+                <div class="site-footer__section">
+                  <p class="h1 site-footer__section-title">My account</p>
+                  <ul class="site-footer__list">
+                    
+                      <li class="site-footer__list-item"><a href="/account">My orders</a></li>
+                      <li class="site-footer__list-item"><a href="/account/addresses">My adresses</a></li>
+                      <li class="site-footer__list-item"><a href="/cart">My cart</a></li>
+                      <li class="site-footer__list-item"><a href="/account">My personal info</a></li>
+                      {% if customer %}
+                    	<li class="site-footer__list-item"><a href="/account/logout">{{ 'layout.customer.log_out' | t }}</a></li>
+                      {% else %}
+                    	<li class="site-footer__list-item"><a href="/account/login">{{ 'layout.customer.sign_in' | t }}</a></li>
+                      {% endif %}
+ 
+                  </ul>
+                </div>
+            
+        </div>-->
+   <div class="flex__item">
+          
+              
+                <div class="site-footer__section">
+                  <p class="h1 site-footer__section-title">Products Reviews</p>
+                  <ul class="site-footer__list">
+                    
+                      <li class="site-footer__list-item"><a href="https://torokhtiy.com/pages/blog-reviews">Products Reviews</a></li>
+                      <li class="site-footer__list-item"><a href="mailto:reviews@torokhtiy.com">Contact Editorial</a></li>
+                      <li class="site-footer__list-item"><a href="https://torokhtiy.com/pages/gym-equipment-hot-deals">Gym Equipment Special Offers from Oleksiy Torokhtiy</a></li>
+                      <li class="site-footer__list-item"><a href="https://torokhtiy.com/pages/how-we-make-our-products-reviews">How We Make Our Product’s Reviews</a></li>
+                      {% if customer %}
+                      {% else %}
+                      {% endif %}
+ 
+                  </ul>
+                </div>
+            
+        </div>
+      
+        <div class="flex__item">
+          
+              <div class="site-footer__section">
+                
+                  <p class="h1 site-footer__section-title text-left">Follow us</p>
+                
+                <ul class="list--inline social-icons text-left">
+                  
+                    <li>
+                      <a href="https://www.facebook.com/Torokhtiyo" target="_blank" rel="noopener noreferrer" title="Alexey Torokhtiy on Facebook">
+                        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-facebook" viewBox="0 0 32 32"><path fill="#444" d="M18.222 11.556V8.91c0-1.194.264-1.799 2.118-1.799h2.326V2.667h-3.882c-4.757 0-6.326 2.181-6.326 5.924v2.965H9.333V16h3.125v13.333h5.764V16h3.917l.528-4.444h-4.444z"></path></svg>
+                      </a>
+                    </li>
+                  
+                  
+                    <li>
+                      <a href="https://www.tiktok.com/@torokhtiy_olympian" target="_blank" rel="noopener noreferrer" title="Alexey Torokhtiy on Tiktok">
+                        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-twitter" viewBox="0 0 32 32"><path fill="#444" d="M24 4H6a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm-1.311 9.474a4.27 4.27 0 0 1-3.967-1.911v6.577a4.861 4.861 0 1 1-4.861-4.862c.102 0 .201.009.3.015v2.396c-.1-.012-.197-.03-.3-.03a2.481 2.481 0 0 0 0 4.962c1.371 0 2.581-1.08 2.581-2.45l.024-11.17h2.289a4.268 4.268 0 0 0 3.934 3.811v2.662z"></path></svg>
+                      </a>
+                    </li>
+                  <li>
+                      <a href="https://www.reddit.com/user/TOROKHTIY_Aleksey/" target="_blank" rel="noopener noreferrer" title="Alexey Torokhtiy on Reddit">
+                        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-twitter" viewBox="0 0 32 32"><path fill="#444" d="M17.662 2C15.565 2 14 3.713 14 5.662v3.373c-2.75.146-5.266.88-7.273 2.03-.774-.744-1.81-1.074-2.815-1.073-1.09.001-2.203.378-2.97 1.242l-.018.02-.018.02c-.737.92-1.028 2.154-.832 3.378a4.4 4.4 0 0 0 1.953 2.977C2.02 17.753 2 17.875 2 18c0 4.962 5.832 9 13 9s13-4.038 13-9c0-.125-.02-.247-.027-.371a4.4 4.4 0 0 0 1.953-2.977c.196-1.224-.095-2.458-.832-3.379l-.018-.02-.017-.019c-.769-.864-1.882-1.241-2.971-1.242-1.005 0-2.041.33-2.815 1.072C21.266 9.914 18.75 9.181 16 9.035V5.662C16 4.683 16.565 4 17.662 4c.52 0 1.155.26 2.149.61.84.294 1.932.592 3.33.681A2.501 2.501 0 0 0 25.5 7C26.875 7 28 5.875 28 4.5S26.875 2 25.5 2c-.939 0-1.752.53-2.18 1.3a9.836 9.836 0 0 1-2.847-.577C19.569 2.406 18.738 2 17.663 2zm-13.75 9.992c.395 0 .77.104 1.08.272-1.104.921-1.941 1.998-2.447 3.174a2.31 2.31 0 0 1-.494-1.102c-.108-.672.093-1.37.412-1.783.301-.325.851-.56 1.45-.56zm22.174 0c.598 0 1.15.236 1.451.56.319.414.52 1.112.412 1.784a2.31 2.31 0 0 1-.494 1.101c-.506-1.175-1.343-2.252-2.447-3.173a2.27 2.27 0 0 1 1.078-.272zM10 14a2 2 0 1 1 .001 3.999A2 2 0 0 1 10 14zm10 0a2 2 0 1 1 .001 3.999A2 2 0 0 1 20 14zm.238 5.533C19.6 21.4 17.556 23 15 23c-2.556 0-4.6-1.599-5.238-3.332 1.15.933 3.066 1.6 5.238 1.6 2.172 0 4.088-.668 5.238-1.735z"></path></svg>
+                      </a>
+                    </li>
+                  
+                  
+                    <li>
+                      <a href="https://www.instagram.com/torokhtiy/" target="_blank" rel="noopener noreferrer" title="Alexey Torokhtiy on Instagram">
+                        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-instagram" viewBox="0 0 512 512"><path d="M256 49.5c67.3 0 75.2.3 101.8 1.5 24.6 1.1 37.9 5.2 46.8 8.7 11.8 4.6 20.2 10 29 18.8s14.3 17.2 18.8 29c3.4 8.9 7.6 22.2 8.7 46.8 1.2 26.6 1.5 34.5 1.5 101.8s-.3 75.2-1.5 101.8c-1.1 24.6-5.2 37.9-8.7 46.8-4.6 11.8-10 20.2-18.8 29s-17.2 14.3-29 18.8c-8.9 3.4-22.2 7.6-46.8 8.7-26.6 1.2-34.5 1.5-101.8 1.5s-75.2-.3-101.8-1.5c-24.6-1.1-37.9-5.2-46.8-8.7-11.8-4.6-20.2-10-29-18.8s-14.3-17.2-18.8-29c-3.4-8.9-7.6-22.2-8.7-46.8-1.2-26.6-1.5-34.5-1.5-101.8s.3-75.2 1.5-101.8c1.1-24.6 5.2-37.9 8.7-46.8 4.6-11.8 10-20.2 18.8-29s17.2-14.3 29-18.8c8.9-3.4 22.2-7.6 46.8-8.7 26.6-1.3 34.5-1.5 101.8-1.5m0-45.4c-68.4 0-77 .3-103.9 1.5C125.3 6.8 107 11.1 91 17.3c-16.6 6.4-30.6 15.1-44.6 29.1-14 14-22.6 28.1-29.1 44.6-6.2 16-10.5 34.3-11.7 61.2C4.4 179 4.1 187.6 4.1 256s.3 77 1.5 103.9c1.2 26.8 5.5 45.1 11.7 61.2 6.4 16.6 15.1 30.6 29.1 44.6 14 14 28.1 22.6 44.6 29.1 16 6.2 34.3 10.5 61.2 11.7 26.9 1.2 35.4 1.5 103.9 1.5s77-.3 103.9-1.5c26.8-1.2 45.1-5.5 61.2-11.7 16.6-6.4 30.6-15.1 44.6-29.1 14-14 22.6-28.1 29.1-44.6 6.2-16 10.5-34.3 11.7-61.2 1.2-26.9 1.5-35.4 1.5-103.9s-.3-77-1.5-103.9c-1.2-26.8-5.5-45.1-11.7-61.2-6.4-16.6-15.1-30.6-29.1-44.6-14-14-28.1-22.6-44.6-29.1-16-6.2-34.3-10.5-61.2-11.7-27-1.1-35.6-1.4-104-1.4z"></path><path d="M256 126.6c-71.4 0-129.4 57.9-129.4 129.4s58 129.4 129.4 129.4 129.4-58 129.4-129.4-58-129.4-129.4-129.4zm0 213.4c-46.4 0-84-37.6-84-84s37.6-84 84-84 84 37.6 84 84-37.6 84-84 84z"></path><circle cx="390.5" cy="121.5" r="30.2"></circle></svg>
+                      </a>
+                    </li>
+                  
+                  
+                  
+                  
+                    <li>
+                      <a href="https://www.youtube.com/user/WeightliftingUkraine" target="_blank" rel="noopener noreferrer" title="Alexey Torokhtiy on YouTube">
+                        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-youtube" viewBox="0 0 33 32"><path fill="#444" d="M-.314 25.286q0 1.969 1.299 3.347t3.163 1.378h23.913q1.864 0 3.163-1.378t1.299-3.347V6.256q0-1.969-1.313-3.386t-3.15-1.417H4.147q-1.837 0-3.15 1.417T-.316 6.256v19.03zm11.944-3.439V9.694q0-.184.105-.289.079-.026.131-.026l.131.026 11.444 6.09q.105.105.105.262 0 .105-.105.21l-11.444 6.09q-.052.052-.105.052-.105 0-.158-.052-.105-.105-.105-.21z"></path></svg>
+                      </a>
+                    </li>
+                </ul>
+              </div>        
+        </div>      
+
+    </div>
+  </div> 
+</footer>
+
+
+</div>
+
+    <!-- {% section 'footer' %} -->
+
+    <ul hidden>
+      <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
+      <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
+    </ul>
+
+    <script>
+      window.shopUrl = '{{ request.origin }}';
+      window.routes = {
+        cart_add_url: '{{ routes.cart_add_url }}',
+        cart_change_url: '{{ routes.cart_change_url }}',
+        cart_update_url: '{{ routes.cart_update_url }}',
+        cart_url: '{{ routes.cart_url }}',
+        predictive_search_url: '{{ routes.predictive_search_url }}'
+      };
+
+      window.cartStrings = {
+        error: `{{ 'sections.cart.cart_error' | t }}`,
+        quantityError: `{{ 'sections.cart.cart_quantity_error_html' | t: quantity: '[quantity]' }}`
+      }
+
+      window.variantStrings = {
+        addToCart: `{{ 'products.product.add_to_cart' | t }}`,
+        soldOut: `{{ 'products.product.sold_out' | t }}`,
+        unavailable: `{{ 'products.product.unavailable' | t }}`,
+      }
+
+      window.accessibilityStrings = {
+        imageAvailable: `{{ 'products.product.media.image_available' | t: index: '[index]' }}`,
+        shareSuccess: `{{ 'general.share.success_message' | t }}`,
+        pauseSlideshow: `{{ 'sections.slideshow.pause_slideshow' | t }}`,
+        playSlideshow: `{{ 'sections.slideshow.play_slideshow' | t }}`,
+      }
+    </script>
+
+    {%- if settings.predictive_search_enabled -%}
+      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+  <!--Gem_Page_Footer_Script-->
+{% render 'gem-app-footer-scripts', GEM_FOOTER_SCRIPT: GEM_FOOTER_SCRIPT %}
+<!--End_Gem_Page_Footer_Script-->
+</body>
+  <style>
+.locale-selectors__container {
+    display: none !important;
+}
+</style>
+</html>
